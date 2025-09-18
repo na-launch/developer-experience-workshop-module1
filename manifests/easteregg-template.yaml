@@ -1,0 +1,16 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  namespace: default
+  name: easteregg
+  title: Easter Egg
+  description: You've found an easter egg!
+spec:
+  owner: group:default/cluster-admins
+  type: service
+  steps:
+    - id: runWorkflow
+      name: Run workflow
+      action: orchestrator:workflow:run
+      input:
+        workflow_id: greeting

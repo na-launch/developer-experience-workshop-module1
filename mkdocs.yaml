@@ -1,0 +1,8 @@
+site_name: Module 1
+site_description: Introduction to Developer Hub
+
+nav:
+  - Overview: index.md
+
+plugins:
+  - techdocs-core

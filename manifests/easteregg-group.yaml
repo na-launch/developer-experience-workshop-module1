@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1beta1
+kind: Group
+metadata:
+  namespace: default
+  name: easteregg
+spec:
+  type: group
+  profile:
+    displayName: easteregg
+  children: []
+  members:
+    - kechung
+    - dvb
+    - michwils
+    - phknezev

@@ -1,0 +1,100 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  namespace: default
+  name: easteregg-api
+  description: Easter Egg API
+  tags:
+    - api
+spec:
+  type: openapi
+  lifecycle: development
+  owner: group:default/cluster-admins
+  profile:
+    displayName: Easter Egg API
+  definition: >+
+    ---
+
+    swagger: "2.0"
+
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    info:
+      title: Easter Egg API
+      description: Congrats, you've found an Easter Egg!  That wasn't too hard, was it?
+      version: 1.0.0
+
+    schemes:
+      - http
+
+    paths:
+      /api/v1/hide:
+      
+        post:
+          summary: Hide an easter egg
+          description: >
+            This method is used by your Red Hat workshop administrators to hide easter eggs all throughout the workshop.
+          tags:
+            - easteregg
+          parameters:
+            - in: body
+              name: easterEgg
+              schema:
+                $ref: '#/definitions/EasterEgg'
+              required: true
+          responses:
+            200:
+              description: Returns a confirmation that the easter egg was placed
+              headers:
+                Location:
+                  type: string
+                  description: Location of the easter egg within the workshop content.
+                  format: uri
+            400:
+              $ref: '#/responses/BadContent'
+            404:
+              $ref: '#/responses/NotFound'
+            409:
+              $ref: '#/responses/Conflict'
+            default:
+              $ref: '#/responses/InternalServerError'
+
+    definitions:
+      EasterEgg:
+        type: object
+        discriminator: kind
+        properties:
+          kind:
+            type: string
+        required:
+          - kind
+          
+      Error:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+
+    responses:
+      BadContent:
+        description: The easter egg supplied to the server was invalid
+        schema:
+          $ref: "#/definitions/Error"
+      Conflict:
+        description: The request conflicts with another easter egg that has been placed
+        schema:
+          $ref: "#/definitions/Error"
+        headers:
+          Location:
+            type: string
+            format: uri
+      NotFound:
+        description: The easter egg requested could not be found
+      InternalServerError:
+        description: There was an internal error in the server while processing the request
+        schema:
+          $ref: "#/definitions/Error"

@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: workshop-module1
+  title: Module 1
+  description: |
+    Introduction to Red Hat Developer Hub
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - developerhub
+spec:
+  type: module
+  lifecycle: production
+  owner: group:default/cluster-admins
+  subcomponentOf: component:default/workshop-repository
+  dependsOn:
+    - component:default/workshop-agenda
+
